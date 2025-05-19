@@ -39,7 +39,7 @@ train_y = torch.tensor(Y_raw_extended, dtype=torch.double)
 train_y_hv = train_y.clone()
 train_y_hv[:, 1] = -train_y_hv[:, 1]
 
-ref_point = [0.0, -15.0, 20.0]
+ref_point = [0.0, -10.0, 20.0]
 partitioning = NondominatedPartitioning(ref_point=torch.tensor(ref_point, dtype=torch.double), Y=train_y_hv)
 
 model = SingleTaskGP(train_x, train_y_hv)
@@ -74,7 +74,7 @@ def fitness(x_tensor, model, best_f, scaler, bounds_tensor, graphite_idx, viscos
 
 # GA 실행 함수
 def run_GA_for_initial_candidates(model, bounds_tensor, best_f, scaler, graphite_idx, viscosity_idx,
-                                  pop_size=20, generations=30):
+                                  pop_size=20, generations=50):
     dim = bounds_tensor.shape[1]
     pop = torch.rand(pop_size, dim, dtype=torch.float64)
     for _ in range(generations):
